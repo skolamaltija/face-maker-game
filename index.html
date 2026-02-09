@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kif qed tħossok? - Face Maker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+  <style>
+    .emoji-font {
+      font-family: 'Noto Color Emoji', sans-serif;
+    }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useRef } = React;
+
+    const EyeAsset = ({ variant }) => {
+      const strokeColor = "#1a1a1a";
+      const strokeWidth = 3.5;
+      
+      switch (variant) {
+        case "ferħan":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 60 30" className="pointer-events-none">
+              <path d="M5,20 Q15,5 25,20" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+              <path d="M35,20 Q45,5 55,20" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+            </svg>
+          );
+        case "mdejjaq":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 60 30" className="pointer-events-none">
+              <path d="M5,15 Q15,5 25,10" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+              <path d="M35,10 Q45,5 55,15" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+              <circle cx="15" cy="22" r="3" fill={strokeColor} />
+              <circle cx="45" cy="22" r="3" fill={strokeColor} />
+            </svg>
+          );
+        case "rabjan":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 60 30" className="pointer-events-none">
+              <line x1="5" y1="5" x2="25" y2="15" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+              <line x1="55" y1="5" x2="35" y2="15" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+              <circle cx="15" cy="22" r="4" fill={strokeColor} />
+              <circle cx="45" cy="22" r="4" fill={strokeColor} />
+            </svg>
+          );
+        case "sorpriż":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 60 40" className="pointer-events-none">
+              <circle cx="15" cy="20" r="12" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} />
+              <circle cx="45" cy="20" r="12" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} />
+              <circle cx="15" cy="20" r="3" fill={strokeColor} />
+              <circle cx="45" cy="20" r="3" fill={strokeColor} />
+            </svg>
+          );
+        case "bżegħan":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 60 40" className="pointer-events-none">
+              <circle cx="15" cy="20" r="10" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} />
+              <circle cx="45" cy="20" r="10" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} />
+              <circle cx="15" cy="20" r="2" fill={strokeColor} />
+              <circle cx="45" cy="20" r="3" fill={strokeColor} />
+              <path d="M10,5 Q15,2 20,5" fill="none" stroke={strokeColor} strokeWidth={2} />
+              <path d="M40,5 Q45,2 50,5" fill="none" stroke={strokeColor} strokeWidth={2} />
+            </svg>
+          );
+        case "għajjien":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 60 30" className="pointer-events-none">
+              <path d="M10,10 Q10,25 20,25 Q30,25 30,10" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" transform="translate(-5, 0) scale(0.8)" />
+              <path d="M10,10 Q10,25 20,25 Q30,25 30,10" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" transform="translate(25, 0) scale(0.8)" />
+            </svg>
+          );
+        default:
+          return null;
+      }
+    };
+
+    const MouthAsset = ({ variant }) => {
+      const strokeColor = "#1a1a1a";
+      const strokeWidth = 3.5;
+      
+      switch (variant) {
+        case "ferħan":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 50 30" className="pointer-events-none">
+              <path d="M5,5 Q25,25 45,5" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+            </svg>
+          );
+        case "mdejjaq":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 50 30" className="pointer-events-none">
+              <path d="M5,25 Q25,5 45,25" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+            </svg>
+          );
+        case "rabjan":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 50 30" className="pointer-events-none">
+              <rect x="5" y="8" width="40" height="14" rx="4" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} />
+              <line x1="5" y1="15" x2="45" y2="15" stroke={strokeColor} strokeWidth={1.5} />
+              <line x1="15" y1="8" x2="15" y2="22" stroke={strokeColor} strokeWidth={1} />
+              <line x1="25" y1="8" x2="25" y2="22" stroke={strokeColor} strokeWidth={1} />
+              <line x1="35" y1="8" x2="35" y2="22" stroke={strokeColor} strokeWidth={1} />
+            </svg>
+          );
+        case "sorpriż":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 50 40" className="pointer-events-none">
+              <ellipse cx="25" cy="20" rx="10" ry="14" fill={strokeColor} />
+            </svg>
+          );
+        case "bżegħan":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 50 30" className="pointer-events-none">
+              <path d="M5,15 Q10,5 15,15 T25,15 T35,15 T45,15" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} strokeLinecap="round" />
+            </svg>
+          );
+        case "għajjien":
+          return (
+            <svg width="100%" height="100%" viewBox="0 0 50 30" className="pointer-events-none">
+              <circle cx="25" cy="15" r="6" fill={strokeColor} />
+            </svg>
+          );
+        default:
+          return null;
+      }
+    };
+
+    const EmotionCard = ({ label, emoji, colorClass, onSelect, isActive }) => (
+      <div
+        onClick={() => onSelect(label)}
+        className={`bg-white p-2 sm:p-3 rounded-2xl shadow-sm border-b-4 ${colorClass} text-center cursor-pointer transition-all hover:-translate-y-1 hover:shadow-md active:scale-95 ${isActive ? "ring-4 ring-blue-400" : ""}`}
+      >
+        <div className="text-2xl sm:text-3xl mb-1 emoji-font">{emoji}</div>
+        <h3 className="text-xs sm:text-sm font-bold text-gray-700">{label}</h3>
+      </div>
+    );
+
+    function App() {
+      const [faceFeatures, setFaceFeatures] = useState([]);
+      const [selectedEmotion, setSelectedEmotion] = useState(null);
+      const [activeTouchId, setActiveTouchId] = useState(null);
+      const [touchOffset, setTouchOffset] = useState({ x: 0, y: 0 });
+      const [draggingFromPalette, setDraggingFromPalette] = useState(null);
+      const [gender, setGender] = useState("maskil");
+      const faceRef = useRef(null);
+
+      const emotions = ["ferħan", "mdejjaq", "rabjan", "sorpriż", "bżegħan", "għajjien"];
+      const emotionCards = [
+        { label: { maskil: "Ferħan", femminil: "Ferħana" }, emoji: "😊", color: "border-yellow-400", key: "ferħan" },
+        { label: { maskil: "Sorpriż", femminil: "Sorpriża" }, emoji: "😲", color: "border-purple-400", key: "sorpriż" },
+        { label: { maskil: "Bżegħan", femminil: "Bżegħana" }, emoji: "😨", color: "border-blue-400", key: "bżegħan" },
+        { label: { maskil: "Irrabjat", femminil: "Irrabjata" }, emoji: "😡", color: "border-red-500", key: "rabjan" },
+        { label: { maskil: "Għajjien", femminil: "Għajjiena" }, emoji: "😴", color: "border-green-400", key: "għajjien" },
+        { label: { maskil: "Mdejjaq", femminil: "Mdejqa" }, emoji: "😢", color: "border-gray-400", key: "mdejjaq" }
+      ];
+
+      const pxToPercent = (px, total) => (px / total) * 100;
+
+      const handleReset = () => {
+        setFaceFeatures([]);
+        setSelectedEmotion(null);
+      };
+
+      const handleDragStart = (e, type, variant, fromPalette = true, id = null) => {
+        let offsetX = 0;
+        let offsetY = 0;
+        if (!fromPalette && faceRef.current) {
+          const rect = e.target.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+        }
+        const dragData = JSON.stringify({ type, variant, fromPalette, id, offsetX, offsetY });
+        e.dataTransfer.setData("text/plain", dragData);
+        e.dataTransfer.effectAllowed = "copyMove";
+      };
+
+      const handleDrop = (e) => {
+        e.preventDefault();
+        const dataStr = e.dataTransfer.getData("text/plain");
+        if (!dataStr) return;
+        
+        const { type, variant, fromPalette, id, offsetX, offsetY } = JSON.parse(dataStr);
+        const faceRect = faceRef.current.getBoundingClientRect();
+        const wPercent = type === "għajnejn" ? 50 : 45;
+        const hPercent = type === "għajnejn" ? 25 : 30;
+        
+        let dropX, dropY;
+        if (fromPalette) {
+          dropX = pxToPercent(e.clientX - faceRect.left - (faceRect.width * wPercent / 200), faceRect.width);
+          dropY = pxToPercent(e.clientY - faceRect.top - (faceRect.height * hPercent / 200), faceRect.height);
+        } else {
+          dropX = pxToPercent(e.clientX - faceRect.left - offsetX, faceRect.width);
+          dropY = pxToPercent(e.clientY - faceRect.top - offsetY, faceRect.height);
+        }
+        
+        const newItem = { id: fromPalette ? Date.now() : id, type, variant, x: dropX, y: dropY };
+        if (fromPalette) {
+          setFaceFeatures(prev => [...prev, newItem]);
+        } else {
+          setFaceFeatures(prev => prev.map(item => item.id === id ? newItem : item));
+        }
+      };
+
+      const handleTouchStart = (e, featureId) => {
+        const touch = e.touches[0];
+        const rect = e.currentTarget.getBoundingClientRect();
+        setTouchOffset({
+          x: touch.clientX - rect.left,
+          y: touch.clientY - rect.top
+        });
+        setActiveTouchId(featureId);
+      };
+
+      const handlePaletteTouchStart = (e, type, variant) => {
+        const touch = e.touches[0];
+        const rect = e.currentTarget.getBoundingClientRect();
+        setDraggingFromPalette({
+          type,
+          variant,
+          offsetX: touch.clientX - rect.left,
+          offsetY: touch.clientY - rect.top
+        });
+      };
+
+      const handleTouchMove = (e) => {
+        if (activeTouchId === null && !draggingFromPalette) return;
+        e.preventDefault();
+        
+        const touch = e.touches[0];
+        const faceRect = faceRef.current.getBoundingClientRect();
+        const isInsideFace = touch.clientX >= faceRect.left && touch.clientX <= faceRect.right && 
+                            touch.clientY >= faceRect.top && touch.clientY <= faceRect.bottom;
+        
+        if (activeTouchId !== null) {
+          const newX = pxToPercent(touch.clientX - faceRect.left - touchOffset.x, faceRect.width);
+          const newY = pxToPercent(touch.clientY - faceRect.top - touchOffset.y, faceRect.height);
+          setFaceFeatures(prev => prev.map(f => f.id === activeTouchId ? { ...f, x: newX, y: newY } : f));
+        } else if (draggingFromPalette && isInsideFace) {
+          const newId = Date.now();
+          const initialX = pxToPercent(touch.clientX - faceRect.left - draggingFromPalette.offsetX, faceRect.width);
+          const initialY = pxToPercent(touch.clientY - faceRect.top - draggingFromPalette.offsetY, faceRect.height);
+          setFaceFeatures(prev => [...prev, {
+            id: newId,
+            type: draggingFromPalette.type,
+            variant: draggingFromPalette.variant,
+            x: initialX,
+            y: initialY
+          }]);
+          setTouchOffset({ x: draggingFromPalette.offsetX, y: draggingFromPalette.offsetY });
+          setActiveTouchId(newId);
+          setDraggingFromPalette(null);
+        }
+      };
+
+      const handleTouchEnd = () => {
+        setActiveTouchId(null);
+        setDraggingFromPalette(null);
+      };
+
+      const handlePaletteTap = (type, variant) => {
+        const wPercent = type === "għajnejn" ? 50 : 45;
+        const hPercent = type === "għajnejn" ? 25 : 30;
+        const newItem = {
+          id: Date.now(),
+          type,
+          variant,
+          x: 50 - wPercent / 2,
+          y: 50 - hPercent / 2
+        };
+        setFaceFeatures(prev => [...prev, newItem]);
+      };
+
+      return (
+        <div 
+          className="min-h-screen bg-gradient-to-br from-fuchsia-300 via-yellow-200 to-cyan-300 p-4 md:p-8 flex flex-col items-center gap-4 font-sans select-none overflow-x-hidden w-full"
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-start justify-center w-full max-w-[1400px]">
+            {/* Emotion Selection Panel */}
+            <div className="bg-white/95 backdrop-blur-xl p-6 rounded-[2.5rem] shadow-xl w-full lg:w-72 flex flex-col gap-6 h-fit border-[6px] border-white shrink-0">
+              <h1 className="text-4xl font-black bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent text-center leading-tight">
+                Kif qed tħossok?
+              </h1>
+              <div className="grid grid-cols-2 lg:grid-cols-2 gap-3">
+                {emotionCards.map(card => (
+                  <EmotionCard
+                    key={card.key}
+                    label={card.label[gender]}
+                    emoji={card.emoji}
+                    colorClass={card.color}
+                    isActive={selectedEmotion === card.label[gender]}
+                    onSelect={setSelectedEmotion}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={handleReset}
+                title="Start again"
+                className="w-full bg-red-500 text-white py-2.5 rounded-full font-bold hover:bg-red-600 transition-all shadow-md text-sm tracking-wider"
+              >
+                Start again
+              </button>
+            </div>
+
+            {/* Main Face Area */}
+            <div className="flex flex-col items-center gap-8 flex-1 w-full relative">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center w-full">
+                Jiena nħossni {selectedEmotion ? selectedEmotion.toLowerCase() : ""}
+              </h1>
+              
+              <div className="flex flex-col lg:flex-row items-center gap-16 md:gap-24 lg:gap-32 w-full justify-center">
+                {/* Face Canvas */}
+                <div
+                  ref={faceRef}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={handleDrop}
+                  className="relative w-[75vw] h-[75vw] max-w-[500px] max-h-[500px] bg-yellow-300 rounded-full border-[2vw] md:border-[12px] border-white shadow-2xl touch-none"
+                  style={{
+                    boxShadow: 'inset -15px -15px 40px rgba(0,0,0,0.1), 0 20px 40px -10px rgba(0,0,0,0.2)'
+                  }}
+                >
+                  {/* Ears */}
+                  <div className="absolute -left-[6%] top-1/2 -translate-y-1/2 w-[10%] h-[20%] bg-yellow-300 rounded-l-full border-[1.5vw] md:border-[8px] border-white border-r-0" />
+                  <div className="absolute -right-[6%] top-1/2 -translate-y-1/2 w-[10%] h-[20%] bg-yellow-300 rounded-r-full border-[1.5vw] md:border-[8px] border-white border-l-0" />
+                  
+                  {/* Face Features */}
+                  {faceFeatures.map(feature => (
+                    <div
+                      key={feature.id}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, feature.type, feature.variant, false, feature.id)}
+                      onTouchStart={(e) => handleTouchStart(e, feature.id)}
+                      className={`absolute cursor-move group z-10 transition-shadow ${activeTouchId === feature.id ? 'scale-105 z-50 shadow-2xl ring-2 ring-white/50 rounded-lg' : ''}`}
+                      style={{
+                        left: `${feature.x}%`,
+                        top: `${feature.y}%`,
+                        width: feature.type === "għajnejn" ? "50%" : "45%",
+                        height: feature.type === "għajnejn" ? "25%" : "30%",
+                        touchAction: 'none'
+                      }}
+                    >
+                      <button
+                        onClick={() => setFaceFeatures(prev => prev.filter(f => f.id !== feature.id))}
+                        className="absolute -top-2 -right-2 bg-white text-red-600 rounded-full w-6 h-6 sm:w-8 sm:h-8 font-black flex items-center justify-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity z-20 shadow-lg border-2 border-red-50"
+                      >
+                        ✕
+                      </button>
+                      {feature.type === "għajnejn" ? 
+                        <EyeAsset variant={feature.variant} /> : 
+                        <MouthAsset variant={feature.variant} />
+                      }
+                    </div>
+                  ))}
+                </div>
+
+                {/* Gender Toggle */}
+                <div className="lg:h-full flex lg:flex-col items-center justify-center">
+                  <button
+                    onClick={() => {
+                      setGender(prev => prev === "maskil" ? "femminil" : "maskil");
+                      setSelectedEmotion(null);
+                    }}
+                    className="group relative flex flex-col items-center p-6 bg-white/80 hover:bg-white rounded-[2.5rem] shadow-xl border-4 border-white transition-all active:scale-95"
+                  >
+                    <div className="flex bg-gray-100 p-1.5 rounded-2xl w-48 relative overflow-hidden">
+                      <div className={`absolute top-1.5 left-1.5 w-[calc(50%-6px)] h-[calc(100%-12px)] bg-blue-500 rounded-xl transition-all duration-300 shadow-sm ${gender === "femminil" ? "translate-x-[100%]" : ""}`} />
+                      <span className={`flex-1 text-center py-2.5 text-base font-black z-10 transition-colors ${gender === "maskil" ? "text-white" : "text-gray-400"}`}>
+                        Maskil
+                      </span>
+                      <span className={`flex-1 text-center py-2.5 text-base font-black z-10 transition-colors ${gender === "femminil" ? "text-white" : "text-gray-400"}`}>
+                        Femminil
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature Palette */}
+          <div className="w-full max-w-[1400px] bg-white/40 backdrop-blur-md p-6 rounded-[2.5rem] border-4 border-white shadow-xl">
+            <div className="flex flex-col md:flex-row gap-6">
+              {/* Eyes Palette */}
+              <div className="flex-1 bg-cyan-50/50 p-4 rounded-[1.5rem] border-2 border-white shadow-inner">
+                <h3 className="font-bold text-blue-600 mb-3 text-center text-sm uppercase tracking-widest">Għajnejn</h3>
+                <div className="grid grid-cols-6 sm:grid-cols-6 gap-2">
+                  {emotions.map(emotion => (
+                    <div
+                      key={`eye-${emotion}`}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, "għajnejn", emotion)}
+                      onClick={() => handlePaletteTap("għajnejn", emotion)}
+                      onTouchStart={(e) => handlePaletteTouchStart(e, "għajnejn", emotion)}
+                      className="cursor-grab active:cursor-grabbing hover:scale-110 transition-all bg-white p-2 rounded-xl border border-gray-100 shadow flex justify-center items-center aspect-square touch-none"
+                    >
+                      <EyeAsset variant={emotion} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mouth Palette */}
+              <div className="flex-1 bg-lime-50/50 p-4 rounded-[1.5rem] border-2 border-white shadow-inner">
+                <h3 className="font-bold text-emerald-700 mb-3 text-center text-sm uppercase tracking-widest">Ħalq</h3>
+                <div className="grid grid-cols-6 sm:grid-cols-6 gap-2">
+                  {emotions.map(emotion => (
+                    <div
+                      key={`mouth-${emotion}`}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, "ħalq", emotion)}
+                      onClick={() => handlePaletteTap("ħalq", emotion)}
+                      onTouchStart={(e) => handlePaletteTouchStart(e, "ħalq", emotion)}
+                      className="cursor-grab active:cursor-grabbing hover:scale-110 transition-all bg-white p-2 rounded-xl border border-gray-100 shadow flex justify-center items-center aspect-square touch-none"
+                    >
+                      <MouthAsset variant={emotion} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {selectedEmotion && (
+              <div className="mt-6 text-center text-lg font-bold text-blue-700 bg-white/50 py-2 px-6 rounded-full block mx-auto w-fit border border-white">
+                You have chosen <span className="text-purple-600">{selectedEmotion}</span>. Now make a face that matches!
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
