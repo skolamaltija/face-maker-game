@@ -72,7 +72,7 @@
             <svg width="100%" height="100%" viewBox="0 0 60 40" className="pointer-events-none">
               <circle cx="15" cy="20" r="10" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} />
               <circle cx="45" cy="20" r="10" fill="none" stroke={strokeColor} strokeWidth={strokeWidth} />
-              <circle cx="15" cy="20" r="2" fill={strokeColor} />
+              <circle cx="15" cy="20" r="3" fill={strokeColor} />
               <circle cx="45" cy="20" r="3" fill={strokeColor} />
               <path d="M10,5 Q15,2 20,5" fill="none" stroke={strokeColor} strokeWidth={2} />
               <path d="M40,5 Q45,2 50,5" fill="none" stroke={strokeColor} strokeWidth={2} />
@@ -140,9 +140,9 @@
       }
     };
 
-    const EmotionCard = ({ label, emoji, colorClass, onSelect, isActive }) => (
+    const EmotionCard = ({ label, emotionKey, emoji, colorClass, onSelect, isActive }) => (
       <div
-        onClick={() => onSelect(label)}
+        onClick={() => onSelect(emotionKey)}
         className={`bg-white p-2 sm:p-3 rounded-2xl shadow-sm border-b-4 ${colorClass} text-center cursor-pointer transition-all hover:-translate-y-1 hover:shadow-md active:scale-95 ${isActive ? "ring-4 ring-blue-400" : ""}`}
       >
         <div className="text-2xl sm:text-3xl mb-1 emoji-font">{emoji}</div>
@@ -168,6 +168,11 @@
         { label: { maskil: "Għajjien", femminil: "Għajjiena" }, emoji: "😴", color: "border-green-400", key: "għajjien" },
         { label: { maskil: "Mdejjaq", femminil: "Mdejqa" }, emoji: "😢", color: "border-gray-400", key: "mdejjaq" }
       ];
+
+      const getEmotionLabel = (key) => {
+        const card = emotionCards.find(c => c.key === key);
+        return card ? card.label[gender] : "";
+      };
 
       const pxToPercent = (px, total) => (px / total) * 100;
 
@@ -302,9 +307,10 @@
                   <EmotionCard
                     key={card.key}
                     label={card.label[gender]}
+                    emotionKey={card.key}
                     emoji={card.emoji}
                     colorClass={card.color}
-                    isActive={selectedEmotion === card.label[gender]}
+                    isActive={selectedEmotion === card.key}
                     onSelect={setSelectedEmotion}
                   />
                 ))}
@@ -324,7 +330,7 @@
                 {/* Face and Header */}
                 <div className="flex flex-col items-center gap-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center w-full">
-                  Jiena nħossni {selectedEmotion ? selectedEmotion.toLowerCase() : ""}
+                  Jiena nħossni {selectedEmotion ? getEmotionLabel(selectedEmotion).toLowerCase() : ""}
                 </h1>
                 {/* Face Canvas */}
                 <div
@@ -372,24 +378,19 @@
                 </div>
 
                 {/* Gender Toggle */}
-                <div className="lg:h-full flex lg:flex-col items-center justify-center">
-                  <button
-                    onClick={() => {
-                      setGender(prev => prev === "maskil" ? "femminil" : "maskil");
-                      setSelectedEmotion(null);
-                    }}
-                    className="group relative flex flex-col items-center p-6 bg-white/80 hover:bg-white rounded-[2.5rem] shadow-xl border-4 border-white transition-all active:scale-95"
+                <div className="lg:h-full flex lg:flex-col items-center justify-center gap-3">
+                  <div
+                    onClick={() => setGender("maskil")}
+                    className={`bg-white p-2 sm:p-3 rounded-2xl shadow-sm border-b-4 border-blue-400 text-center cursor-pointer transition-all active:scale-95 w-28 ${gender === "maskil" ? "ring-4 ring-blue-400" : ""}`}
                   >
-                    <div className="flex bg-gray-100 p-1.5 rounded-2xl w-48 relative overflow-hidden">
-                      <div className={`absolute top-1.5 left-1.5 w-[calc(50%-6px)] h-[calc(100%-12px)] bg-blue-500 rounded-xl transition-all duration-300 shadow-sm ${gender === "femminil" ? "translate-x-[100%]" : ""}`} />
-                      <span className={`flex-1 text-center py-2.5 text-base font-black z-10 transition-colors ${gender === "maskil" ? "text-white" : "text-gray-400"}`}>
-                        Maskil
-                      </span>
-                      <span className={`flex-1 text-center py-2.5 text-base font-black z-10 transition-colors ${gender === "femminil" ? "text-white" : "text-gray-400"}`}>
-                        Femminil
-                      </span>
-                    </div>
-                  </button>
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-700">Maskil</h3>
+                  </div>
+                  <div
+                    onClick={() => setGender("femminil")}
+                    className={`bg-white p-2 sm:p-3 rounded-2xl shadow-sm border-b-4 border-pink-400 text-center cursor-pointer transition-all active:scale-95 w-28 ${gender === "femminil" ? "ring-4 ring-blue-400" : ""}`}
+                  >
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-700">Femminil</h3>
+                  </div>
                 </div>
               </div>
             </div>
@@ -439,7 +440,7 @@
             
             {selectedEmotion && (
               <div className="mt-6 text-center text-lg font-bold text-blue-700 bg-white/50 py-2 px-6 rounded-full block mx-auto w-fit border border-white">
-                You have chosen <span className="text-purple-600">{selectedEmotion}</span>. Now make a face that matches!
+                You have chosen <span className="text-purple-600">{getEmotionLabel(selectedEmotion)}</span>. Now make a face that matches!
               </div>
             )}
           </div>
